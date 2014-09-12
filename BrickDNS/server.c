@@ -6,6 +6,15 @@
 //  Copyright (c) 2014 AlecZ. All rights reserved.
 //
 
+/*
+ ███████╗███████╗██████╗ ██╗   ██╗███████╗██████╗     ██████╗
+ ██╔════╝██╔════╝██╔══██╗██║   ██║██╔════╝██╔══██╗   ██╔════╝
+ ███████╗█████╗  ██████╔╝██║   ██║█████╗  ██████╔╝   ██║
+ ╚════██║██╔══╝  ██╔══██╗╚██╗ ██╔╝██╔══╝  ██╔══██╗   ██║
+ ███████║███████╗██║  ██║ ╚████╔╝ ███████╗██║  ██║██╗╚██████╗
+ ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝╚═╝ ╚═════╝
+ */
+
 #include <stdio.h>
 #include <strings.h>
 #include <sys/socket.h>
@@ -20,6 +29,7 @@
 
 /* Constants for English language: */
 #define LONGEST_WORD 27
+#define MAX_REPLY_LENGTH 1024 // TODO fix
 /* */
 
 /* Constants for coordinate-number conversion: */
@@ -75,6 +85,13 @@ struct ServerWorkerThread{
     char* dictionary; // master dictionary, a 2D array of chars (numWords x LONGEST_WORD)
 };
 
+typedef enum{
+    NET_NULL_START, // error
+    NET_RESOLVE_NAME,
+    NET_GET_NAME,
+    NET_NULL_END // error
+} ClientCommand;
+
 void* workerThreadFunction(void* argVoid){
     struct ServerWorkerThread* arg = (struct ServerWorkerThread*) argVoid;
     int clntSock = 0;
@@ -87,6 +104,9 @@ void* workerThreadFunction(void* argVoid){
     size_t recvBufLen = arg->server->recvSize;
     uint8_t* receiveBuffer = emalloc(sizeof(uint8_t)*recvBufLen);
     size_t receiveSize = 0;
+    char coordinatesReplyFormat[] = "%f,%f";
+    char wordsReplyFormat[] = "%s,%s,%s,%s";
+    char replyBuffer[MAX_REPLY_LENGTH];
     //*** Additional thread initialization code goes here ***//
     //vvvv//
     
@@ -113,7 +133,48 @@ void* workerThreadFunction(void* argVoid){
                 }
                 //*** Additional data from client handling code goes here ***//
                 //vvvv//
-                cTalkSend(clntSock, "echo", strlen("echo")+1); // TODO replace with actual code
+                if (logLevel >= LOG_FULL) printf("Received message: %s\nof length %lu\n", receiveBuffer, receiveSize);
+                ClientCommand cmd = ((int) receiveBuffer[0])+NET_NULL_START;
+                if (cmd >= NET_NULL_END || cmd <= NET_NULL_START){
+                    if (logLevel >= LOG_ABNORMAL) printf("Invalid command %d from %s; disconnecting.\n", cmd, ipAddr);
+                    break;
+                }
+                receiveBuffer[recvBufLen-1] = '\0';
+                switch (cmd){
+                    case NET_GET_NAME:{
+                        char *token;
+                        char *state;
+                        float latitude, longitude;
+                        int i = 0;
+                        for (token = strtok_r(receiveBuffer, "&", &state); token != NULL && i<2; token = strtok_r(NULL, "&", &state)){
+                            if (i==0) latitude = atof(token);
+                            else longitude = atof(token);
+                            i++;
+                        }
+                        uint64_t num = numberFromCoordinates(latitude, longitude);
+                        struct LinkedList* words = wordsFromNumber(num);
+                        sprintf(replyBuffer, wordsReplyFormat, words->value, words->next->value, words->next->next->value, words->next->next->next->value);
+                        cTalkSend(clntSock, replyBuffer, strlen(replyBuffer)+1);
+                        break;
+                    }
+                    case NET_RESOLVE_NAME:{
+                        char *token;
+                        char *state;
+                        struct LinkedList* head = emalloc(sizeof(struct LinkedList));
+                        struct LinkedList* node = head;
+                        for (token = strtok_r(receiveBuffer, "&", &state); token != NULL; token = strtok_r(NULL, "&", &state)){
+                            node->value = token;
+                            node->size = strlen(token)+1;
+                            node = node->next;
+                        }
+                        uint64_t num = numberFromWords(head);
+                        float latitude, longitude;
+                        coordinatesFromNumber(num, &latitude, &longitude);
+                        sprintf(replyBuffer, coordinatesReplyFormat, latitude, longitude);
+                        cTalkSend(clntSock, replyBuffer, strlen(replyBuffer)+1);
+                        break;
+                    }
+                }
                 //^^^^
             } while (arg->server->keepAlive);
             close(clntSock);
