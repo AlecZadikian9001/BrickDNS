@@ -18,6 +18,32 @@
 #include "ctalk.h"
 #include "server.h"
 
+/* Constants for coordinate-number conversion: */
+#define MIN_LATITIUDE (-90)
+#define MAX_LATITUDE (90)
+#define MIN_LONGITUDE (-180.00000)
+#define MAX_LONGITUDE (180.00000)
+// add more if you need...
+/* */
+
+// Should map coordinates to a number with a one-to-one relationship.
+// Coordinates are given as standard lat/long with precision down to hundred thousandths.
+// Latitude goes from -90.00000˚ to 90.00000˚ (inclusive)
+// Longitude goes from -180.00000˚ to 179.99999˚ (inclusive)
+// Output has to be uint64_t (unsigned 64-bit integer) to have a big enough co-domain. Do NOT convert the uint64_t to anything else.
+uint64_t numberFromCoordinates(float latitude, float longitude){
+    return 0; // rewrite this
+}
+
+//Undoes the above function, converting num to latitude and longitude. Leaves latitude and longitude pointing to the results.
+void coordinatesFromNumber(uint64_t num, float* latitude, float* longitude){
+    
+  //Set the latitude and longitude pointers to whatever they should be like this:
+  //  *latitude = your_latitude_output;
+  //  *longitude = your_longitude_output;
+  //
+}
+
 struct ServerWorkerThread{
     struct Server* server; // the server options
     int threadID; // the thread ID for this worker thread

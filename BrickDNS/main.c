@@ -57,8 +57,8 @@ int main(int argc, const char * argv[]){
     
     struct Server server;
     server.sockfd = servSock;
-    server.threadLimit = 8;
-    server.timeout = 5;
+    server.threadLimit = 16;
+    server.timeout = 1;
     server.keepAlive = true;
     server.isListening = true;
     server.recvSize = 1024;
