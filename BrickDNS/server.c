@@ -18,35 +18,61 @@
 #include "ctalk.h"
 #include "server.h"
 
+/* Constants for English language: */
+#define LONGEST_WORD 27
+/* */
+
 /* Constants for coordinate-number conversion: */
 #define MIN_LATITIUDE (-90)
 #define MAX_LATITUDE (90)
 #define MIN_LONGITUDE (-180.00000)
 #define MAX_LONGITUDE (180.00000)
-// add more if you need...
+// add more if you need, Arman...
 /* */
 
+// *** Arman, you can do this one if you want. *** //
 // Should map coordinates to a number with a one-to-one relationship.
 // Coordinates are given as standard lat/long with precision down to hundred thousandths.
 // Latitude goes from -90.00000˚ to 90.00000˚ (inclusive)
 // Longitude goes from -180.00000˚ to 179.99999˚ (inclusive)
 // Output has to be uint64_t (unsigned 64-bit integer) to have a big enough co-domain. Do NOT convert the uint64_t to anything else.
 uint64_t numberFromCoordinates(float latitude, float longitude){
-    return 0; // rewrite this
+    return 0; // TODO
 }
 
+// *** Arman, you can do this one if you want. *** //
 //Undoes the above function, converting num to latitude and longitude. Leaves latitude and longitude pointing to the results.
 void coordinatesFromNumber(uint64_t num, float* latitude, float* longitude){
-    
+    //TODO
   //Set the latitude and longitude pointers to whatever they should be like this:
   //  *latitude = your_latitude_output;
   //  *longitude = your_longitude_output;
   //
 }
 
+// I don't know how to do this one yet...
+struct LinkedList* wordsFromNumber(uint64_t num){
+    struct LinkedList* ret = emalloc(sizeof(struct LinkedList));
+    // TODO
+    return ret;
+}
+
+// I don't know about this either.
+uint64_t numberFromWords(struct LinkedList* words){
+    char* word;
+    while (words){
+        word = words->value;
+        // TODO
+        words = words->next;
+    }
+    return 0;
+}
+
 struct ServerWorkerThread{
     struct Server* server; // the server options
-    int threadID; // the thread ID for this worker thread
+    unsigned int threadID; // the thread ID for this worker thread
+    unsigned int numWords; // number of words in master dictionary // TODO may want to add separate dictionaries for nouns, verbs, adjectives, articles, etc.
+    char* dictionary; // master dictionary, a 2D array of chars (numWords x LONGEST_WORD)
 };
 
 void* workerThreadFunction(void* argVoid){
