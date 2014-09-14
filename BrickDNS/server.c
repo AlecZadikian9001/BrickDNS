@@ -47,7 +47,11 @@
 // Longitude goes from -18000000˚ to 17999999 (inclusive)
 // Output has to be uint64_t (unsigned 64-bit integer) to have a big enough co-domain. Do NOT convert the uint64_t to anything else.
 uint64_t numberFromCoordinates(int latitude, int longitude){
-    return 0; // TODO
+    uint64_t number;
+    latitude = latitude + 90000000;
+    longitude = longitude + 18000000;
+    //No clue bro number =
+    return number; // TODO
 }
 
 // *** Arman, you can do this one if you want. *** //
