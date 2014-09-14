@@ -43,16 +43,16 @@
 // *** Arman, you can do this one if you want. *** //
 // Should map coordinates to a number with a one-to-one relationship.
 // Coordinates are given as standard lat/long with precision down to hundred thousandths.
-// Latitude goes from -90.00000˚ to 90.00000˚ (inclusive)
-// Longitude goes from -180.00000˚ to 179.99999˚ (inclusive)
+// Latitude goes from -9000000 to 9000000 (inclusive)
+// Longitude goes from -18000000˚ to 17999999 (inclusive)
 // Output has to be uint64_t (unsigned 64-bit integer) to have a big enough co-domain. Do NOT convert the uint64_t to anything else.
-uint64_t numberFromCoordinates(float latitude, float longitude){
+uint64_t numberFromCoordinates(int latitude, int longitude){
     return 0; // TODO
 }
 
 // *** Arman, you can do this one if you want. *** //
 //Undoes the above function, converting num to latitude and longitude. Leaves latitude and longitude pointing to the results.
-void coordinatesFromNumber(uint64_t num, float* latitude, float* longitude){
+void coordinatesFromNumber(uint64_t num, int* latitude, int* longitude){
     //TODO
   //Set the latitude and longitude pointers to whatever they should be like this:
   //  *latitude = your_latitude_output;
@@ -104,7 +104,7 @@ void* workerThreadFunction(void* argVoid){
     size_t recvBufLen = arg->server->recvSize;
     uint8_t* receiveBuffer = emalloc(sizeof(uint8_t)*recvBufLen);
     size_t receiveSize = 0;
-    char coordinatesReplyFormat[] = "%f,%f";
+    char coordinatesReplyFormat[] = "%d,%d";
     char wordsReplyFormat[] = "%s,%s,%s,%s";
     char replyBuffer[MAX_REPLY_LENGTH];
     //*** Additional thread initialization code goes here ***//
@@ -168,7 +168,7 @@ void* workerThreadFunction(void* argVoid){
                             node = node->next;
                         }
                         uint64_t num = numberFromWords(head);
-                        float latitude, longitude;
+                        int latitude, longitude;
                         coordinatesFromNumber(num, &latitude, &longitude);
                         sprintf(replyBuffer, coordinatesReplyFormat, latitude, longitude);
                         cTalkSend(clntSock, replyBuffer, strlen(replyBuffer)+1);
