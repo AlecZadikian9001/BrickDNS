@@ -50,7 +50,8 @@ uint64_t numberFromCoordinates(int latitude, int longitude){
     uint64_t number;
     latitude = latitude + 90000000;
     longitude = longitude + 18000000;
-    //No clue bro number =
+    number = longitude + (latitude*35999999);
+    
     return number; // TODO
 }
 
