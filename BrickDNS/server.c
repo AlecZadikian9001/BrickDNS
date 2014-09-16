@@ -51,8 +51,7 @@ uint64_t numberFromCoordinates(int latitude, int longitude){
     latitude = latitude + 90000000;
     longitude = longitude + 18000000;
     number = longitude + (latitude*35999999);
-    
-    return number; // TODO
+    return number;
 }
 
 // *** Arman, you can do this one if you want. *** //
