@@ -33,10 +33,10 @@
 /* */
 
 /* Constants for coordinate-number conversion: */
-#define MIN_LATITIUDE (-90)
-#define MAX_LATITUDE (90)
-#define MIN_LONGITUDE (-180.00000)
-#define MAX_LONGITUDE (180.00000)
+#define MIN_LATITIUDE (-9000000)
+#define MAX_LATITUDE (9000000)
+#define MIN_LONGITUDE (-18000000)
+#define MAX_LONGITUDE (18000000)
 // add more if you need, Arman...
 /* */
 
@@ -57,12 +57,15 @@ uint64_t numberFromCoordinates(int latitude, int longitude){
 
 // *** Arman, you can do this one if you want. *** //
 //Undoes the above function, converting num to latitude and longitude. Leaves latitude and longitude pointing to the results.
-void coordinatesFromNumber(uint64_t num, int* latitude, int* longitude){
+void coordinatesFromNumber(uint64_t number, int* latitude, int* longitude){
     //TODO
   //Set the latitude and longitude pointers to whatever they should be like this:
   //  *latitude = your_latitude_output;
   //  *longitude = your_longitude_output;
   //
+    *latitude = number % 35999999;
+    *longitude = (int)number - (*latitude*35999999);
+    
 }
 
 // I don't know how to do this one yet...
