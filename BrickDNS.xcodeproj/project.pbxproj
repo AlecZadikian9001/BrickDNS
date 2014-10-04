@@ -18,6 +18,7 @@
 		E1C7C7E419C282DC00D1C49F /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E1C7C7E319C282DC00D1C49F /* libcurl.dylib */; };
 		E1C7C7E619C282E200D1C49F /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E1C7C7E519C282E200D1C49F /* libcrypto.dylib */; };
 		E1C7C7E819C282E700D1C49F /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E1C7C7E719C282E700D1C49F /* libssl.dylib */; };
+		E1DF6CDA19E06BF700E59FA8 /* testClient.c in Sources */ = {isa = PBXBuildFile; fileRef = E1DF6CD919E06BF700E59FA8 /* testClient.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,8 @@
 		E1C7C7E319C282DC00D1C49F /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		E1C7C7E519C282E200D1C49F /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		E1C7C7E719C282E700D1C49F /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
+		E1DF6CD719E06BE300E59FA8 /* testClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testClient.h; sourceTree = "<group>"; };
+		E1DF6CD919E06BF700E59FA8 /* testClient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = testClient.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +109,8 @@
 				E1B2334119C25ACA00513578 /* database.c */,
 				E1B2334319C25DEB00513578 /* sha256.h */,
 				E1B2334419C25DEB00513578 /* sha256.c */,
+				E1DF6CD719E06BE300E59FA8 /* testClient.h */,
+				E1DF6CD919E06BF700E59FA8 /* testClient.c */,
 				E1B2333D19C25A8500513578 /* general.h */,
 				E1B2333E19C25A8500513578 /* general.c */,
 				E1B2334B19C25F9B00513578 /* server.h */,
@@ -238,6 +243,7 @@
 				E1B2333F19C25A8500513578 /* general.c in Sources */,
 				E1B2332519C259DB00513578 /* main.c in Sources */,
 				E1B2334219C25ACA00513578 /* database.c in Sources */,
+				E1DF6CDA19E06BF700E59FA8 /* testClient.c in Sources */,
 				E1B2334519C25DEB00513578 /* sha256.c in Sources */,
 				E1B2334A19C25E2200513578 /* sqlite3.c in Sources */,
 				E1B2333819C25A1D00513578 /* ctalk.c in Sources */,

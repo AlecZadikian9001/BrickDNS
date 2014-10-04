@@ -25,6 +25,7 @@
 #include <limits.h>
 #include <signal.h>
 #include <sys/ioctl.h>
+#include "testClient.h"
 #include "server.h"
 #include "general.h"
 
@@ -68,6 +69,7 @@ int main(int argc, const char * argv[]){
     if (logLevel>=LOG_ABNORMAL) printf("logLevel: %d\nthreadLimit: %d\ntimeout: %f\nkeepAlive: %d\n",logLevel,server.threadLimit, server.timeout, server.keepAlive);
     
     startServer(&server);
+    interactiveTest();
     
     pause();
 }

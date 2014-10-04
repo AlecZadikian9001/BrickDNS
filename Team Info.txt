@@ -39,13 +39,13 @@ Exact Technical Details for Communication with BrickDNS Server:
 - Connect to TCP port 9001 on the server (IP address of server to be determined).
 - All messages must be sent with a header preceding them to indicate their size. *Do not worry about the header!* Alec will write functions for you that add the header… unless y’all feel like learning about variable length values and low-level TCP operation. Just focus on making the messages and finding a way to send them over TCP port 9001 to the server.
 - Format for sending a sentence and receiving coordinates: “2%s&%s&%s&%s”… The character ‘2’ followed by each word, separated with an ampersand (‘&’). Example: “2the&dog&walks&alone”.
-- Response (from server) format for querying coordinates from sentence: “%d&%d”. The latitude, an ampersand (‘&’), then the longitude. Latitude will be a number from 0 to 18000000 (inclusive). Note that real life latitude actually goes from -90˚ to 90˚; you will need to divide the number by 10000 then subtract 90˚ to get the real latitude. Longitude will be a number from 0 to 35999999 (inclusive). Similarly, longitude actually goes from -180˚ to 179.99999…˚, so you will need to divide by 10000 then subtract 180˚. Example: “2342&34945623”.
-- Format for sending coordinates and receiving sentence: “1%d&%d”. The character ‘1’ followed by latitude, ampersand, longitude. As described above, latitude will be a number from 0 to 18000000 (inclusive), longitude will be a number from 0 to 35999999 (inclusive), so do the appropriate calculations… Example: “12342&34945623” (the ‘1’ in the beginning is not part of the latitude).
+- Response (from server) format for querying coordinates from sentence: “%d&%d”. The latitude, an ampersand (‘&’), then the longitude. Latitude will be a number from -9000000 to 9000000 (inclusive). Note that real life latitude actually goes from -90˚ to 90˚; you will need to divide the number by 10000 to get the real latitude. Longitude will be a number from -18000000 to 17999999 (inclusive). Similarly, longitude actually goes from -180˚ to 179.99999…˚, so you will need to divide by 10000. Example: “2342&-349623”.
+- Format for sending coordinates and receiving sentence: “1%d&%d”. The character ‘1’ followed by latitude, ampersand, longitude. As described above, latitude will be a number from -9000000 to 9000000 (inclusive), longitude will be a number from -18000000 to 17999999 (inclusive), so do the appropriate calculations… Example: “12342&34945623” (the ‘1’ in the beginning is not part of the latitude).
 - Response format for querying sentence based on coordinates: ”%s&%s&%s&%s”… Each word separated by ampersand. Example: “the&dog&walks&alone”.
 
 Concise summary of examples:
-request = “2the&dog&walks&alone” => response = “2342&34945623”
-request = “12342&34945623”	 => response = “the&dog&walks&alone”
+request = “2the&dog&walks&alone” => response = “2342&14456231”
+request = “12342&14456231”	 => response = “the&dog&walks&alone”
 \\
 
 = SERVER SIDE ========

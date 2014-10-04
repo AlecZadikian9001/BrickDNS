@@ -73,6 +73,8 @@ struct LinkedList* wordsFromNumber(uint64_t num){
         sprintf(add, "%d", i);
         new->size = sizeof(add);
         new->value = add;
+        new->next = emalloc(sizeof(struct LinkedList));
+        new = new->next;
     }
     return ret;
 }
@@ -145,7 +147,7 @@ void* workerThreadFunction(void* argVoid){
                 //*** Additional data from client handling code goes here ***//
                 //vvvv//
                 if (logLevel >= LOG_FULL) printf("Received message: %s\nof length %lu\n", receiveBuffer, receiveSize);
-                ClientCommand cmd = ((int) receiveBuffer[0])+NET_NULL_START;
+                ClientCommand cmd = ((int) receiveBuffer[0] - '0')+NET_NULL_START;
                 if (cmd >= NET_NULL_END || cmd <= NET_NULL_START){
                     if (logLevel >= LOG_ABNORMAL) printf("Invalid command %d from %s; disconnecting.\n", cmd, ipAddr);
                     break;
@@ -176,6 +178,7 @@ void* workerThreadFunction(void* argVoid){
                         for (token = strtok_r(receiveBuffer, "&", &state); token != NULL; token = strtok_r(NULL, "&", &state)){
                             node->value = strdup(token);
                             node->size = strlen(token)+1;
+                            node->next = emalloc(sizeof(struct LinkedList));
                             node = node->next;
                         }
                         uint64_t num = numberFromWords(head);
