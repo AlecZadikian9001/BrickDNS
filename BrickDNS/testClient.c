@@ -24,6 +24,7 @@ int interactiveTest(){
     int sockfd = 0;
     char keyboard[128];
     while (true){
+        printf("stdin >> ");
         fgets(keyboard, sizeof(keyboard), stdin);
         struct sockaddr_in serv_addr;
         if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0){
@@ -44,6 +45,6 @@ int interactiveTest(){
         keyboard[strlen(keyboard)-1] = '\0';
         cTalkSend(sockfd, keyboard, strlen(keyboard)+1);
         cTalkRecv(sockfd, keyboard, sizeof(keyboard));
-        printf("%s\n", keyboard);
+        printf("stdout >> %s\n", keyboard);
     }
 }

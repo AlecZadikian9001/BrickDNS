@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E10CD8F219E08CDE007ADDE5 /* ctalk.c in Sources */ = {isa = PBXBuildFile; fileRef = E10CD8EA19E08CDE007ADDE5 /* ctalk.c */; };
+		E10CD8F419E08CDE007ADDE5 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = E10CD8F119E08CDE007ADDE5 /* README.md */; };
 		E1B2332519C259DB00513578 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = E1B2332419C259DB00513578 /* main.c */; };
 		E1B2332719C259DB00513578 /* BrickDNS.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B2332619C259DB00513578 /* BrickDNS.1 */; };
-		E1B2333819C25A1D00513578 /* ctalk.c in Sources */ = {isa = PBXBuildFile; fileRef = E1B2333019C25A1D00513578 /* ctalk.c */; };
 		E1B2333F19C25A8500513578 /* general.c in Sources */ = {isa = PBXBuildFile; fileRef = E1B2333E19C25A8500513578 /* general.c */; };
 		E1B2334219C25ACA00513578 /* database.c in Sources */ = {isa = PBXBuildFile; fileRef = E1B2334119C25ACA00513578 /* database.c */; };
 		E1B2334519C25DEB00513578 /* sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = E1B2334419C25DEB00513578 /* sha256.c */; };
@@ -22,9 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E1B2333B19C25A1D00513578 /* PBXContainerItemProxy */ = {
+		E10CD8F619E08CDE007ADDE5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E1B2333419C25A1D00513578 /* libctalk.xcodeproj */;
+			containerPortal = E10CD8EE19E08CDE007ADDE5 /* libctalk.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = E1E6BE8E199AEBF500531413;
 			remoteInfo = libctalk;
@@ -45,14 +46,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E10CD8EA19E08CDE007ADDE5 /* ctalk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctalk.c; sourceTree = "<group>"; };
+		E10CD8EB19E08CDE007ADDE5 /* ctalk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ctalk.h; sourceTree = "<group>"; };
+		E10CD8ED19E08CDE007ADDE5 /* libctalk.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = libctalk.1; sourceTree = "<group>"; };
+		E10CD8EE19E08CDE007ADDE5 /* libctalk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = libctalk.xcodeproj; sourceTree = "<group>"; };
+		E10CD8F119E08CDE007ADDE5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E1B2332119C259DB00513578 /* BrickDNS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BrickDNS; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B2332419C259DB00513578 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		E1B2332619C259DB00513578 /* BrickDNS.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = BrickDNS.1; sourceTree = "<group>"; };
-		E1B2333019C25A1D00513578 /* ctalk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ctalk.c; sourceTree = "<group>"; };
-		E1B2333119C25A1D00513578 /* ctalk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ctalk.h; sourceTree = "<group>"; };
-		E1B2333319C25A1D00513578 /* libctalk.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = libctalk.1; sourceTree = "<group>"; };
-		E1B2333419C25A1D00513578 /* libctalk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = libctalk.xcodeproj; sourceTree = "<group>"; };
-		E1B2333719C25A1D00513578 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		E1B2333D19C25A8500513578 /* general.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = general.h; sourceTree = "<group>"; };
 		E1B2333E19C25A8500513578 /* general.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = general.c; sourceTree = "<group>"; };
 		E1B2334019C25ACA00513578 /* database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = database.h; sourceTree = "<group>"; };
@@ -85,6 +86,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E10CD8E819E08CDE007ADDE5 /* libctalk */ = {
+			isa = PBXGroup;
+			children = (
+				E10CD8E919E08CDE007ADDE5 /* libctalk */,
+				E10CD8EE19E08CDE007ADDE5 /* libctalk.xcodeproj */,
+				E10CD8F119E08CDE007ADDE5 /* README.md */,
+			);
+			path = libctalk;
+			sourceTree = "<group>";
+		};
+		E10CD8E919E08CDE007ADDE5 /* libctalk */ = {
+			isa = PBXGroup;
+			children = (
+				E10CD8EA19E08CDE007ADDE5 /* ctalk.c */,
+				E10CD8EB19E08CDE007ADDE5 /* ctalk.h */,
+				E10CD8ED19E08CDE007ADDE5 /* libctalk.1 */,
+			);
+			path = libctalk;
+			sourceTree = "<group>";
+		};
+		E10CD8EF19E08CDE007ADDE5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E10CD8F719E08CDE007ADDE5 /* libctalk */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		E1B2331819C259DB00513578 = {
 			isa = PBXGroup;
 			children = (
@@ -124,42 +153,13 @@
 		E1B2332D19C25A1200513578 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				E10CD8E819E08CDE007ADDE5 /* libctalk */,
 				E1C7C7E719C282E700D1C49F /* libssl.dylib */,
 				E1C7C7E519C282E200D1C49F /* libcrypto.dylib */,
 				E1C7C7E319C282DC00D1C49F /* libcurl.dylib */,
 				E1B2334619C25E1A00513578 /* SQLite3 */,
-				E1B2332E19C25A1D00513578 /* libctalk */,
 			);
 			name = lib;
-			sourceTree = "<group>";
-		};
-		E1B2332E19C25A1D00513578 /* libctalk */ = {
-			isa = PBXGroup;
-			children = (
-				E1B2332F19C25A1D00513578 /* libctalk */,
-				E1B2333419C25A1D00513578 /* libctalk.xcodeproj */,
-				E1B2333719C25A1D00513578 /* README.md */,
-			);
-			name = libctalk;
-			path = ../libctalk;
-			sourceTree = "<group>";
-		};
-		E1B2332F19C25A1D00513578 /* libctalk */ = {
-			isa = PBXGroup;
-			children = (
-				E1B2333019C25A1D00513578 /* ctalk.c */,
-				E1B2333119C25A1D00513578 /* ctalk.h */,
-				E1B2333319C25A1D00513578 /* libctalk.1 */,
-			);
-			path = libctalk;
-			sourceTree = "<group>";
-		};
-		E1B2333519C25A1D00513578 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E1B2333C19C25A1D00513578 /* libctalk */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		E1B2334619C25E1A00513578 /* SQLite3 */ = {
@@ -213,8 +213,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = E1B2333519C25A1D00513578 /* Products */;
-					ProjectRef = E1B2333419C25A1D00513578 /* libctalk.xcodeproj */;
+					ProductGroup = E10CD8EF19E08CDE007ADDE5 /* Products */;
+					ProjectRef = E10CD8EE19E08CDE007ADDE5 /* libctalk.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -225,11 +225,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		E1B2333C19C25A1D00513578 /* libctalk */ = {
+		E10CD8F719E08CDE007ADDE5 /* libctalk */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
 			path = libctalk;
-			remoteRef = E1B2333B19C25A1D00513578 /* PBXContainerItemProxy */;
+			remoteRef = E10CD8F619E08CDE007ADDE5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -241,12 +241,13 @@
 			files = (
 				E1B2334D19C25FA700513578 /* server.c in Sources */,
 				E1B2333F19C25A8500513578 /* general.c in Sources */,
+				E10CD8F419E08CDE007ADDE5 /* README.md in Sources */,
 				E1B2332519C259DB00513578 /* main.c in Sources */,
 				E1B2334219C25ACA00513578 /* database.c in Sources */,
 				E1DF6CDA19E06BF700E59FA8 /* testClient.c in Sources */,
 				E1B2334519C25DEB00513578 /* sha256.c in Sources */,
 				E1B2334A19C25E2200513578 /* sqlite3.c in Sources */,
-				E1B2333819C25A1D00513578 /* ctalk.c in Sources */,
+				E10CD8F219E08CDE007ADDE5 /* ctalk.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
