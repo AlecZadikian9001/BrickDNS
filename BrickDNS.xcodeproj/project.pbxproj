@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E10CD8F219E08CDE007ADDE5 /* ctalk.c in Sources */ = {isa = PBXBuildFile; fileRef = E10CD8EA19E08CDE007ADDE5 /* ctalk.c */; };
 		E10CD8F419E08CDE007ADDE5 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = E10CD8F119E08CDE007ADDE5 /* README.md */; };
+		E10CD8FB19E08FDC007ADDE5 /* wordsDatabase.c in Sources */ = {isa = PBXBuildFile; fileRef = E10CD8F919E08FDC007ADDE5 /* wordsDatabase.c */; };
 		E1B2332519C259DB00513578 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = E1B2332419C259DB00513578 /* main.c */; };
 		E1B2332719C259DB00513578 /* BrickDNS.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B2332619C259DB00513578 /* BrickDNS.1 */; };
 		E1B2333F19C25A8500513578 /* general.c in Sources */ = {isa = PBXBuildFile; fileRef = E1B2333E19C25A8500513578 /* general.c */; };
@@ -51,6 +52,8 @@
 		E10CD8ED19E08CDE007ADDE5 /* libctalk.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = libctalk.1; sourceTree = "<group>"; };
 		E10CD8EE19E08CDE007ADDE5 /* libctalk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = libctalk.xcodeproj; sourceTree = "<group>"; };
 		E10CD8F119E08CDE007ADDE5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		E10CD8F919E08FDC007ADDE5 /* wordsDatabase.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wordsDatabase.c; sourceTree = "<group>"; };
+		E10CD8FA19E08FDC007ADDE5 /* wordsDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wordsDatabase.h; sourceTree = "<group>"; };
 		E1B2332119C259DB00513578 /* BrickDNS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BrickDNS; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B2332419C259DB00513578 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		E1B2332619C259DB00513578 /* BrickDNS.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = BrickDNS.1; sourceTree = "<group>"; };
@@ -114,6 +117,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		E10CD8F819E08EE0007ADDE5 /* setup and tests */ = {
+			isa = PBXGroup;
+			children = (
+				E1DF6CD719E06BE300E59FA8 /* testClient.h */,
+				E1DF6CD919E06BF700E59FA8 /* testClient.c */,
+				E10CD8FA19E08FDC007ADDE5 /* wordsDatabase.h */,
+				E10CD8F919E08FDC007ADDE5 /* wordsDatabase.c */,
+			);
+			name = "setup and tests";
+			sourceTree = "<group>";
+		};
 		E1B2331819C259DB00513578 = {
 			isa = PBXGroup;
 			children = (
@@ -134,12 +148,11 @@
 		E1B2332319C259DB00513578 /* BrickDNS */ = {
 			isa = PBXGroup;
 			children = (
+				E10CD8F819E08EE0007ADDE5 /* setup and tests */,
 				E1B2334019C25ACA00513578 /* database.h */,
 				E1B2334119C25ACA00513578 /* database.c */,
 				E1B2334319C25DEB00513578 /* sha256.h */,
 				E1B2334419C25DEB00513578 /* sha256.c */,
-				E1DF6CD719E06BE300E59FA8 /* testClient.h */,
-				E1DF6CD919E06BF700E59FA8 /* testClient.c */,
 				E1B2333D19C25A8500513578 /* general.h */,
 				E1B2333E19C25A8500513578 /* general.c */,
 				E1B2334B19C25F9B00513578 /* server.h */,
@@ -247,6 +260,7 @@
 				E1DF6CDA19E06BF700E59FA8 /* testClient.c in Sources */,
 				E1B2334519C25DEB00513578 /* sha256.c in Sources */,
 				E1B2334A19C25E2200513578 /* sqlite3.c in Sources */,
+				E10CD8FB19E08FDC007ADDE5 /* wordsDatabase.c in Sources */,
 				E10CD8F219E08CDE007ADDE5 /* ctalk.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

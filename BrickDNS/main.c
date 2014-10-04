@@ -26,6 +26,7 @@
 #include <signal.h>
 #include <sys/ioctl.h>
 #include "testClient.h"
+#include "wordsDatabase.h"
 #include "server.h"
 #include "general.h"
 

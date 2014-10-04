@@ -26,11 +26,13 @@
 #include "general.h"
 #include "ctalk.h"
 #include "server.h"
+#include "wordsDatabase.h"
+#include "database.h"
 
 /* Constants for English language: */
 /* Austin, you might want to edit this. */
-#define LONGEST_WORD 27
 #define MAX_REPLY_LENGTH 1024 // TODO fix
+#define DB_URL "sql.db"
 /* */
 
 /* Constants for coordinates: */
@@ -111,6 +113,7 @@ void* workerThreadFunction(void* argVoid){
     struct sockaddr_in clientAddress;
     socklen_t clntLen = sizeof(clientAddress);
     int servSock = arg->server->sockfd;
+    sqlite3* db = NULL;
     struct timeval tv;
     tv.tv_sec = (int) arg->server->timeout; // timeout seconds
     tv.tv_usec = fmod(arg->server->timeout, 1.0)*1000000.0;  // timeout microseconds
@@ -129,6 +132,7 @@ void* workerThreadFunction(void* argVoid){
         if ((clntSock = accept(servSock, (struct sockaddr *) &clientAddress,
                                &clntLen)) >= 0){
             arg->server->threadUsage++;
+            databaseConnect(&db, DB_URL);
             while (!arg->server->isListening) usleep(1000*200);
             setsockopt(clntSock, SOL_SOCKET, SO_RCVTIMEO, (char*)&tv,sizeof(tv));
             if (logLevel >= LOG_ABNORMAL && arg->server->threadUsage >= arg->server->threadLimit) printf("Warning: All worker threads are in use. Consider creating more.\n");
@@ -255,6 +259,12 @@ int startServer(struct Server* mainArg){
     mainArg->mainThread = &mainThread;
     mainArg->threadCount = 0;
     mainArg->threadUsage = 0;
+    
+    sqlite3* db = NULL;
+    databaseConnect(&db, DB_URL);
+    int longestWord = 0;
+    loadWordList(db, &longestWord);
+    
     return changeThreadLimit(mainArg->threadLimit, mainArg);
 }
 

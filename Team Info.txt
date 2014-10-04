@@ -5,7 +5,7 @@ Cal Hacks Project: BrickDNS (server/client)
 
 Members: Alec, Austin, Rodger, Brian, Jeff
 
-Purpose: The purpose of the BrickDNS server is to map any pair of geo coordinates on Earth (down to precision of one ten thousandth of a degree) to some *short*, grammatically correct sentence that may be easily memorized, communicated, etc. by a human and can be mapped back to geo coordinates using the BrickDNS server. For example, the geo coordinates of Ehrman Hall may be mapped to “the dog walks alone”, and then it can map “the dog walks alone” back to the geo coordinates of Ehrman Hall. As a bonus feature to be added later, “brick domain names” may be registered so that any word or words (for example, “Apple HQ”) *that are not already mapped to a location* may be mapped to any location.
+Purpose: The purpose of the BrickDNS server is to map any pair of geo coordinates on Earth (down to precision of one hundred thousandth of a degree) to some *short*, grammatically correct sentence that may be easily memorized, communicated, etc. by a human and can be mapped back to geo coordinates using the BrickDNS server. For example, the geo coordinates of Ehrman Hall may be mapped to “the dog walks alone”, and then it can map “the dog walks alone” back to the geo coordinates of Ehrman Hall. As a bonus feature to be added later, “brick domain names” may be registered so that any word or words (for example, “Apple HQ”) *that are not already mapped to a location* may be mapped to any location.
 
 Roles:
 Alec - Team captain, head developer of server side framework, director of server side.
