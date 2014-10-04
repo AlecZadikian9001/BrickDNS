@@ -16,7 +16,7 @@ int loadWordList(sqlite3* db, int* longestWord){
     char commandBuffer[1024];
     FILE *ifp;
     char *mode = "r";
-    ifp = fopen("dictionary.txt", mode);
+    ifp = fopen("dictionary.txt", mode); //
     if (ifp == NULL) {
         fprintf(stderr, "Can't open input file in.list!\n");
         return RET_INPUT_ERROR;
