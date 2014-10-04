@@ -28,61 +28,65 @@
 #include "server.h"
 
 /* Constants for English language: */
+/* Austin, you might want to edit this. */
 #define LONGEST_WORD 27
 #define MAX_REPLY_LENGTH 1024 // TODO fix
 /* */
 
-/* Constants for coordinate-number conversion: */
+/* Constants for coordinates: */
 #define MIN_LATITIUDE (-9000000)
 #define MAX_LATITUDE (9000000)
+#define NUMBER_POSSIBLE_LATITUDE (MAX_LATITUDE + abs(MIN_LATITUDE) + 1*(MIN_LATITUDE<=0))
 #define MIN_LONGITUDE (-18000000)
-#define MAX_LONGITUDE (18000000)
-// add more if you need, Arman...
+#define MAX_LONGITUDE (17999999)
+#define NUMBER_POSSIBLE_LONGITUDE (MAX_LONGITUDE + abs(MIN_LONGITUDE) + 1*(MIN_LONGITUDE<=0))
 /* */
 
-// *** Arman, you can do this one if you want. *** //
 // Should map coordinates to a number with a one-to-one relationship.
 // Coordinates are given as standard lat/long with precision down to hundred thousandths.
 // Latitude goes from -9000000 to 9000000 (inclusive)
-// Longitude goes from -18000000˚ to 17999999 (inclusive)
+// Longitude goes from -18000000 to 17999999 (inclusive)
 // Output has to be uint64_t (unsigned 64-bit integer) to have a big enough co-domain. Do NOT convert the uint64_t to anything else.
+#define MAX_OUTPUT_NUMBERFROMCOORDINATES (numberFromCoordinates(MAX_LATITUDE, MAX_LONGITUDE))
 uint64_t numberFromCoordinates(int latitude, int longitude){
     uint64_t number;
-    latitude = latitude + 90000000;
-    longitude = longitude + 18000000;
-    number = longitude + (latitude*35999999);
+    latitude = latitude + abs(MIN_LATITIUDE);
+    longitude = longitude + abs(MIN_LONGITUDE);
+    number = longitude + (latitude*NUMBER_POSSIBLE_LONGITUDE);
     return number;
 }
 
-// *** Arman, you can do this one if you want. *** //
 //Undoes the above function, converting num to latitude and longitude. Leaves latitude and longitude pointing to the results.
 void coordinatesFromNumber(uint64_t number, int* latitude, int* longitude){
-    //TODO
-  //Set the latitude and longitude pointers to whatever they should be like this:
-  //  *latitude = your_latitude_output;
-  //  *longitude = your_longitude_output;
-  //
-    *latitude = number % 35999999;
-    *longitude = (int)number - (*latitude*35999999);
-    
+    *latitude = (int) (number % NUMBER_POSSIBLE_LONGITUDE - abs(MIN_LATITIUDE));
+    *longitude = (int) (number / NUMBER_POSSIBLE_LONGITUDE - abs(MIN_LONGITUDE));
 }
 
 // I don't know how to do this one yet...
 struct LinkedList* wordsFromNumber(uint64_t num){
     struct LinkedList* ret = emalloc(sizeof(struct LinkedList));
+    struct LinkedList* new = ret;
     // TODO
+    for (int i = 0; i<4; i++){
+        emalloc(sizeof(struct LinkedList));
+        char add[2];
+        sprintf(add, "%d", i);
+        new->size = sizeof(add);
+        new->value = add;
+    }
     return ret;
 }
 
 // I don't know about this either.
 uint64_t numberFromWords(struct LinkedList* words){
+    uint64_t ret = 0;
     char* word;
     while (words){
         word = words->value;
-        // TODO
+        ret++; // TODO replace
         words = words->next;
     }
-    return 0;
+    return ret;
 }
 
 struct ServerWorkerThread{
@@ -94,8 +98,8 @@ struct ServerWorkerThread{
 
 typedef enum{
     NET_NULL_START, // error
-    NET_RESOLVE_NAME,
-    NET_GET_NAME,
+    NET_RESOLVE_NAME, // 1
+    NET_GET_NAME, // 2
     NET_NULL_END // error
 } ClientCommand;
 
@@ -151,11 +155,11 @@ void* workerThreadFunction(void* argVoid){
                     case NET_GET_NAME:{
                         char *token;
                         char *state;
-                        float latitude, longitude;
+                        int latitude = 0, longitude = 0;
                         int i = 0;
                         for (token = strtok_r(receiveBuffer, "&", &state); token != NULL && i<2; token = strtok_r(NULL, "&", &state)){
-                            if (i==0) latitude = atof(token);
-                            else longitude = atof(token);
+                            if (i==0) latitude = atoi(token);
+                            else longitude = atoi(token);
                             i++;
                         }
                         uint64_t num = numberFromCoordinates(latitude, longitude);
@@ -170,7 +174,7 @@ void* workerThreadFunction(void* argVoid){
                         struct LinkedList* head = emalloc(sizeof(struct LinkedList));
                         struct LinkedList* node = head;
                         for (token = strtok_r(receiveBuffer, "&", &state); token != NULL; token = strtok_r(NULL, "&", &state)){
-                            node->value = token;
+                            node->value = strdup(token);
                             node->size = strlen(token)+1;
                             node = node->next;
                         }

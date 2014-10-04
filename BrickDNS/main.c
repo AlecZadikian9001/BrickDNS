@@ -55,10 +55,10 @@ int main(int argc, const char * argv[]){
     if (bind(servSock, (struct sockaddr *) &serverAddress, sizeof(serverAddress)) < 0){ if (logLevel >= LOG_ERROR) printf("Socket binding failed!\n"); return RET_NETWORK_ERROR; }
     if (listen(servSock, MAX_PENDING) < 0){ if (logLevel >= LOG_ERROR) printf("Socket listening failed!\n"); return RET_NETWORK_ERROR; }
     
-    struct Server server;
+    struct Server server; // TODO change these to what we want
     server.sockfd = servSock;
     server.threadLimit = 16;
-    server.timeout = 1;
+    server.timeout = 100;
     server.keepAlive = true;
     server.isListening = true;
     server.recvSize = 1024;

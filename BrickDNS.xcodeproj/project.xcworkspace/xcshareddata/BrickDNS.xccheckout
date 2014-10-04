@@ -10,33 +10,33 @@
 	<string>BrickDNS</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>57A66E71-3723-4483-8C06-452068622E53</key>
+		<key>A782EA0342C4074B1CF4CB03EFB74F3928BEA9D6</key>
 		<string>https://github.com/AlecZadikian9001/libctalk.git</string>
-		<key>F18F5A9A-7A1C-42D9-A72A-3070D5EBD6D3</key>
+		<key>C41DFBE2348D04B96CD4E273D328A8970E1D6F90</key>
 		<string>https://github.com/AlecZadikian9001/BrickDNS.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>BrickDNS.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>57A66E71-3723-4483-8C06-452068622E53</key>
+		<key>A782EA0342C4074B1CF4CB03EFB74F3928BEA9D6</key>
 		<string>../../../libctalk</string>
-		<key>F18F5A9A-7A1C-42D9-A72A-3070D5EBD6D3</key>
+		<key>C41DFBE2348D04B96CD4E273D328A8970E1D6F90</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/AlecZadikian9001/BrickDNS.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>F18F5A9A-7A1C-42D9-A72A-3070D5EBD6D3</string>
+	<string>C41DFBE2348D04B96CD4E273D328A8970E1D6F90</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F18F5A9A-7A1C-42D9-A72A-3070D5EBD6D3</string>
+			<string>C41DFBE2348D04B96CD4E273D328A8970E1D6F90</string>
 			<key>IDESourceControlWCCName</key>
 			<string>BrickDNS</string>
 		</dict>
@@ -44,7 +44,7 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>57A66E71-3723-4483-8C06-452068622E53</string>
+			<string>A782EA0342C4074B1CF4CB03EFB74F3928BEA9D6</string>
 			<key>IDESourceControlWCCName</key>
 			<string>libctalk</string>
 		</dict>
