@@ -98,7 +98,21 @@ else{
 	char inBuf[512];
   cTalkSend(sockfd, message, strlen(message)+1);
   cTalkRecv(sockfd, inBuf, 512);
-  printf("%s", inBuf);
+  printf("%s\n\n", inBuf);
+  int isCoords = 0;
+  for (int i = 0; i<strlen(inBuf); i++){
+  if (inBuf[i]>'0' && inBuf[i]<'9'){ isCoords = 1; break;}
+  }
+  if (isCoords!=0){
+  char url[512];
+  char* token; char *state;
+  token = strtok_r(inBuf, ",", &state);
+  float latitude = atof(token)/100000;
+  token = strtok_r(NULL, ",", &state);
+                            float longitude = atof(token)/100000;
+  sprintf(url, "<a href=\"https://www.google.com/maps/@%f,%f,20z\">Google Maps</a>", latitude, longitude);
+  printf("%s", url);
+  }
   }
 return 0;
 }
