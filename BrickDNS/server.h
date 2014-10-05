@@ -32,4 +32,6 @@ int startListening(struct Server* server);
 int stopListening(struct Server* server);
 int stopServer(struct Server* server);
 
+struct LinkedList* wordsFromNumber(uint64_t num, sqlite3* db);
+
 #endif

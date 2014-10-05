@@ -13,6 +13,6 @@
 #include "general.h"
 #include "database.h"
 
-int loadWordList(sqlite3* db, int* longestWord);
+int loadWordList(sqlite3* db, int* longestWord, int* num_N, int* num_V, int* num_v, int* num_A);
 
 #endif /* defined(__BrickDNS__wordsDatabase__) */

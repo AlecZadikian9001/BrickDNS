@@ -36,14 +36,15 @@
 /* */
 
 int longestWord = 0; // longest word used in our dictionary
+int num_A = 0, num_N = 0, num_v = 0, num_V = 0; // number of each word type
 
 /* Constants for coordinates: */
 #define MIN_LATITIUDE (-9000000)
 #define MAX_LATITUDE (9000000)
-#define NUMBER_POSSIBLE_LATITUDE (MAX_LATITUDE + abs(MIN_LATITUDE) + 1*(MIN_LATITUDE<=0))
+#define NUMBER_POSSIBLE_LATITUDE (MAX_LATITUDE + abs(MIN_LATITUDE) + 1)
 #define MIN_LONGITUDE (-18000000)
 #define MAX_LONGITUDE (17999999)
-#define NUMBER_POSSIBLE_LONGITUDE (MAX_LONGITUDE + abs(MIN_LONGITUDE) + 1*(MIN_LONGITUDE<=0))
+#define NUMBER_POSSIBLE_LONGITUDE (MAX_LONGITUDE + abs(MIN_LONGITUDE) + 1)
 /* */
 
 // Should map coordinates to a number with a one-to-one relationship.
@@ -56,39 +57,63 @@ uint64_t numberFromCoordinates(int latitude, int longitude){
     uint64_t number;
     latitude = latitude + abs(MIN_LATITIUDE);
     longitude = longitude + abs(MIN_LONGITUDE);
-    number = longitude + (latitude*NUMBER_POSSIBLE_LONGITUDE);
+    number = ((uint64_t) longitude) + (((uint64_t)latitude)*((uint64_t)NUMBER_POSSIBLE_LONGITUDE));
     return number;
 }
 
 //Undoes the above function, converting num to latitude and longitude. Leaves latitude and longitude pointing to the results.
 void coordinatesFromNumber(uint64_t number, int* latitude, int* longitude){
-    *latitude = (int) (number % NUMBER_POSSIBLE_LONGITUDE - abs(MIN_LATITIUDE));
-    *longitude = (int) (number / NUMBER_POSSIBLE_LONGITUDE - abs(MIN_LONGITUDE));
+    *latitude = (int) (number / NUMBER_POSSIBLE_LONGITUDE) - abs(MIN_LATITIUDE);
+    *longitude = (int) (number % NUMBER_POSSIBLE_LONGITUDE) - abs(MIN_LONGITUDE);
 }
 
 struct LinkedList* wordsFromNumber(uint64_t num, sqlite3* db){
     struct LinkedList* ret = emalloc(sizeof(struct LinkedList));
     struct LinkedList* new = ret;
-    
-    //code for adding to linked list (copy/paste as needed)===
-        emalloc(sizeof(struct LinkedList));
-        char add[longestWord+1];
-        //put into add to the word you want to add to the linked list...
-    
-    //=== For getting word from type index (copy/paste as needed)
+    emalloc(sizeof(struct LinkedList));
     char commandBuffer[512]; //lolololol wasteful
-    sprintf(commandBuffer, "SELECT * FROM 'WORDS' WHERE (typeIndex = %d)", typeIndex); // typeIndex here is the type index you're looking for.
-    struct LinkedList* results = databaseSelect(commandBuffer, db, 1);
-    char* word = strdup(stringColumn(results->value, 0)); // Word here is the word with that type index
-    freeRows(results);
-    //===
-    
-    //...
-        new->size = sizeof(add);
-        new->value = strdup(add);
+    for (int i = 0; i<4; i++){
+        uint64_t base = 0;
+        uint64_t divisor = 0;
+        int type = 0;
+        switch (i){
+            case 0:{
+                type = 'A';
+                base = 10000;
+                break;
+            }
+            case 1:{
+                type = 'N';
+                base = 10000;
+                break;
+            }
+            case 2:{
+                type = 'v';
+                base = 1000;
+                break;
+            }
+            case 3:{
+                type = 'V';
+                base = 10000;
+                break;
+            }
+        }
+        int wordIndex = num%base;
+        sprintf(commandBuffer, "SELECT * FROM 'WORDS' WHERE (typeIndex = %d AND type = %d)", wordIndex, type); // typeIndex here is the type index you're looking for.
+        struct LinkedList* results = databaseSelect(commandBuffer, db, 1);
+        if (!results || !results->value){
+            freeRows(results);
+           // freeLinkedList(ret, free); TODO memory leak
+            return NULL;
+        }
+        char* word = strdup(stringColumn(results->value, 0)); // Word here is the word with that type index
+        freeRows(results);
+        num = num/base;
+        new->size = strlen(word)+1;
+        new->value = word;
         new->next = emalloc(sizeof(struct LinkedList));
         new = new->next;
-    //===
+    }
     
     return ret;
 }
@@ -96,18 +121,38 @@ struct LinkedList* wordsFromNumber(uint64_t num, sqlite3* db){
 uint64_t numberFromWords(struct LinkedList* words, sqlite3* db){
     uint64_t ret = 0;
     char* word;
-    while (words){
+    int i = 0;
+    while (words && words->value){
         word = words->value;
         
-        //=== For getting type index from word (copy/paste as needed)
         char commandBuffer[512]; //lolololol wasteful
-        sprintf(commandBuffer, "SELECT * FROM 'WORDS' WHERE (WORD = %s)", word); // Word here is the word you're looking for.
+        sprintf(commandBuffer, "SELECT * FROM 'WORDS' WHERE (WORD = '%s')", word); // Word here is the word you're looking for.
         struct LinkedList* results = databaseSelect(commandBuffer, db, 1);
-        int index = intColumn(results->value, 2); // Index here is the type index of the inputted word.
-        freeRows(results);
-        //===
+        if (!results || !results->value) return 0;
+        uint64_t index = intColumn(results->value, 2); // Index here is the type index of the inputted word.
         
+        switch(i){
+            case 0:{
+                ret = ret + index;
+                break;
+            }
+            case 1:{
+                ret = ret + index*((uint64_t) 10000);
+                break;
+            }
+            case 2:{
+                ret = ret + index*((uint64_t)10000*10000);
+                break;
+            }
+            case 3:{
+                ret = ret + index*((uint64_t)10000*10000*1000);
+                break;
+            }
+        }
+        
+        freeRows(results);
         words = words->next;
+        i++;
     }
     return ret;
 }
@@ -175,6 +220,7 @@ void* workerThreadFunction(void* argVoid){
                     if (logLevel >= LOG_ABNORMAL) printf("Invalid command %d from %s; disconnecting.\n", cmd, ipAddr);
                     break;
                 }
+                memcpy(receiveBuffer, receiveBuffer+1*sizeof(uint8_t), recvBufLen);
                 receiveBuffer[recvBufLen-1] = '\0';
                 switch (cmd){
                     case NET_GET_NAME:{
@@ -202,6 +248,7 @@ void* workerThreadFunction(void* argVoid){
                             node->value = strdup(token);
                             node->size = strlen(token)+1;
                             node->next = emalloc(sizeof(struct LinkedList));
+                            bzero(node->next, sizeof(struct LinkedList));
                             node = node->next;
                         }
                         uint64_t num = numberFromWords(head, db);
@@ -215,6 +262,7 @@ void* workerThreadFunction(void* argVoid){
                 //^^^^
             } while (arg->server->keepAlive);
             close(clntSock);
+            sqlite3_close(db);
             if (logLevel >= LOG_INFORMATIONAL) printf("Client %s disconnected on thread %d.\n", ipAddr, arg->threadID);
             arg->server->threadUsage--;
             if (arg->server->threadCount > arg->server->threadLimit){
@@ -281,7 +329,7 @@ int startServer(struct Server* mainArg){
     
     sqlite3* db = NULL;
     databaseConnect(&db, DB_URL);
-    loadWordList(db, &longestWord);
+    loadWordList(db, &longestWord, &num_N, &num_V, &num_v, &num_A);
     
     return changeThreadLimit(mainArg->threadLimit, mainArg);
 }

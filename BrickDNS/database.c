@@ -27,7 +27,7 @@ int databaseCommand(char* command, sqlite3* db){
     char* error = NULL;
     int ret = sqlite3_exec(db, command, NULL, 0, &error);
 	if (ret!=SQLITE_OK){
-		if (logLevel >= LOG_ERROR) printf("SQL command %s aborted. Error: %s\n", command, error);
+		//if (logLevel >= LOG_ERROR) printf("SQL command %s aborted. Error: %s\n", command, error);
 		return RET_SQL_ERROR;
 	}
     if (error) sqlite3_free(error);
@@ -72,7 +72,7 @@ struct LinkedList* databaseSelect(char* command, sqlite3* db, int count){ //retu
                         break;
                     }
                     default:{
-                        if (logLevel >= LOG_ERROR) printf("Strange error selecting data from SQLite database. Found an invalid value.\n");
+                        //if (logLevel >= LOG_ERROR) printf("Strange error selecting data from SQLite database. Found an invalid value.\n");
                         break;
                     }
                 }
