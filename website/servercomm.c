@@ -60,7 +60,7 @@ size_t cTalkRecv(int fd, unsigned char* buffer, size_t bufferLen){
 }
 
 int main(){
-system("say CGI script being loaded...");
+//system("say CGI script being loaded...");
 char *data = NULL;
 int sockfd = 0;
 printf("%s%c%c\n",
@@ -78,9 +78,6 @@ if(0){
   system("say Error! Invalid data.");
   }
 else{
-  char say[30];
-  sprintf(say, "Message is %s.", message);
-  system(say);
     struct sockaddr_in serv_addr;
 	if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0){
 		printf("\n Error : Could not create socket \n");

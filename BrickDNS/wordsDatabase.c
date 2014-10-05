@@ -32,7 +32,7 @@ int loadWordList(sqlite3* db, int* longestWord, int* num_N, int* num_V, int* num
     while (fscanf(ifp, "%s\r", wordBuffer) != EOF) {
         length = strlen(wordBuffer);
         for (int i = 0; i<strlen(wordBuffer); i++){
-            if (wordBuffer[i]==' ' || (wordBuffer[i]>='A' && wordBuffer[i]<='Z') || wordBuffer[i]=='\'') break;
+            if (wordBuffer[i]==' ' || (wordBuffer[i]>='A' && wordBuffer[i]<='Z') || wordBuffer[i]=='\'' || i>8) break;
             if (wordBuffer[i]=='|'){
                 wordBuffer[i] = '\0';
                 i++;
@@ -64,8 +64,8 @@ int loadWordList(sqlite3* db, int* longestWord, int* num_N, int* num_V, int* num
             printf("Scanned %d words thus far...\n", bigIndex);
         }
     }
-    printf("Word table generation complete, your 1337ness.\n");
-    system("say Word table generation complete, your 1337ness.");
+    printf("Word table generation complete.\n");
+    system("say Word table generation complete.");
     
     //char talkBuf[1024];
     char checkTypeFormat[] = "SELECT *, COUNT(*) FROM 'WORDS' WHERE (type = %d)";

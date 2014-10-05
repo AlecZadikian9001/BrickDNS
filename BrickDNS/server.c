@@ -228,7 +228,7 @@ void* workerThreadFunction(void* argVoid){
                         char *state;
                         int latitude = 0, longitude = 0;
                         int i = 0;
-                        for (token = strtok_r(receiveBuffer, "&", &state); token != NULL && i<2; token = strtok_r(NULL, "&", &state)){
+                        for (token = strtok_r(receiveBuffer, ",", &state); token != NULL && i<2; token = strtok_r(NULL, ",", &state)){
                             if (i==0) latitude = atoi(token);
                             else longitude = atoi(token);
                             i++;
@@ -244,7 +244,7 @@ void* workerThreadFunction(void* argVoid){
                         char *state;
                         struct LinkedList* head = emalloc(sizeof(struct LinkedList));
                         struct LinkedList* node = head;
-                        for (token = strtok_r(receiveBuffer, "&", &state); token != NULL; token = strtok_r(NULL, "&", &state)){
+                        for (token = strtok_r(receiveBuffer, ",", &state); token != NULL; token = strtok_r(NULL, ",", &state)){
                             node->value = strdup(token);
                             node->size = strlen(token)+1;
                             node->next = emalloc(sizeof(struct LinkedList));
