@@ -188,7 +188,7 @@ void* workerThreadFunction(void* argVoid){
                             i++;
                         }
                         uint64_t num = numberFromCoordinates(latitude, longitude);
-                        struct LinkedList* words = wordsFromNumber(num);
+                        struct LinkedList* words = wordsFromNumber(num, db);
                         sprintf(replyBuffer, wordsReplyFormat, words->value, words->next->value, words->next->next->value, words->next->next->next->value);
                         cTalkSend(clntSock, replyBuffer, strlen(replyBuffer)+1);
                         break;
@@ -204,7 +204,7 @@ void* workerThreadFunction(void* argVoid){
                             node->next = emalloc(sizeof(struct LinkedList));
                             node = node->next;
                         }
-                        uint64_t num = numberFromWords(head);
+                        uint64_t num = numberFromWords(head, db);
                         int latitude, longitude;
                         coordinatesFromNumber(num, &latitude, &longitude);
                         sprintf(replyBuffer, coordinatesReplyFormat, latitude, longitude);

@@ -85,6 +85,7 @@ int loadWordList(sqlite3* db, int* longestWord){
     //sprintf(talkBuf, "say There are %d total verbs.", count);
     //system(talkBuf);
     freeRows(response);
+    fclose(ifp);
     
     //system("say There are over 9000 words! You are so 1337.");
     *longestWord = longest;
