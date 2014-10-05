@@ -35,6 +35,8 @@
 #define DB_URL "sql.db"
 /* */
 
+int longestWord = 0; // longest word used in our dictionary
+
 /* Constants for coordinates: */
 #define MIN_LATITIUDE (-9000000)
 #define MAX_LATITUDE (9000000)
@@ -64,30 +66,47 @@ void coordinatesFromNumber(uint64_t number, int* latitude, int* longitude){
     *longitude = (int) (number / NUMBER_POSSIBLE_LONGITUDE - abs(MIN_LONGITUDE));
 }
 
-// I don't know how to do this one yet...
-struct LinkedList* wordsFromNumber(uint64_t num){
+struct LinkedList* wordsFromNumber(uint64_t num, sqlite3* db){
     struct LinkedList* ret = emalloc(sizeof(struct LinkedList));
     struct LinkedList* new = ret;
-    // TODO
-    for (int i = 0; i<4; i++){
+    
+    //code for adding to linked list (copy/paste as needed)===
         emalloc(sizeof(struct LinkedList));
-        char add[2];
-        sprintf(add, "%d", i);
+        char add[longestWord+1];
+        //put into add to the word you want to add to the linked list...
+    
+    //=== For getting word from type index (copy/paste as needed)
+    char commandBuffer[512]; //lolololol wasteful
+    sprintf(commandBuffer, "SELECT * FROM 'WORDS' WHERE (typeIndex = %d)", typeIndex); // typeIndex here is the type index you're looking for.
+    struct LinkedList* results = databaseSelect(commandBuffer, db, 1);
+    char* word = strdup(stringColumn(results->value, 0)); // Word here is the word with that type index
+    freeRows(results);
+    //===
+    
+    //...
         new->size = sizeof(add);
-        new->value = add;
+        new->value = strdup(add);
         new->next = emalloc(sizeof(struct LinkedList));
         new = new->next;
-    }
+    //===
+    
     return ret;
 }
 
-// I don't know about this either.
-uint64_t numberFromWords(struct LinkedList* words){
+uint64_t numberFromWords(struct LinkedList* words, sqlite3* db){
     uint64_t ret = 0;
     char* word;
     while (words){
         word = words->value;
-        ret++; // TODO replace
+        
+        //=== For getting type index from word (copy/paste as needed)
+        char commandBuffer[512]; //lolololol wasteful
+        sprintf(commandBuffer, "SELECT * FROM 'WORDS' WHERE (WORD = %s)", word); // Word here is the word you're looking for.
+        struct LinkedList* results = databaseSelect(commandBuffer, db, 1);
+        int index = intColumn(results->value, 2); // Index here is the type index of the inputted word.
+        freeRows(results);
+        //===
+        
         words = words->next;
     }
     return ret;
@@ -262,7 +281,6 @@ int startServer(struct Server* mainArg){
     
     sqlite3* db = NULL;
     databaseConnect(&db, DB_URL);
-    int longestWord = 0;
     loadWordList(db, &longestWord);
     
     return changeThreadLimit(mainArg->threadLimit, mainArg);
