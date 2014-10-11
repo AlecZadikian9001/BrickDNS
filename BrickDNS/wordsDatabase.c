@@ -11,6 +11,7 @@
 #include "general.h"
 
 int loadWordList(sqlite3* db, int* longestWord, int* num_N, int* num_V, int* num_v, int* num_A){
+    printf("Generating words list...\n");
     int longest = 0;
     char createWordTable[] = "CREATE TABLE 'WORDS' ('word' char(30) PRIMARY KEY UNIQUE NOT NULL, 'type' int(3) NOT NULL, 'typeIndex' int(6) NOT NULL)";
     databaseCommand(createWordTable, db);
@@ -53,22 +54,23 @@ int loadWordList(sqlite3* db, int* longestWord, int* num_N, int* num_V, int* num
                     int sql = databaseCommand(commandBuffer, db);
                     if (sql!=RET_SQL_ERROR){
                     types[typeIndex] = types[typeIndex]+1;
-                    if (strlen(wordBuffer) > longest) longest = strlen(wordBuffer);
+                    int newLen = strlen(wordBuffer);
+                    if (newLen > longest) longest = newLen;
                     }
                 }
                 break;
             }
         }
         bigIndex++;
-        if (bigIndex%4000==0){
+    /*    if (bigIndex%4000==0){
             printf("Scanned %d words thus far...\n", bigIndex);
-        }
+        } */
     }
-    printf("Word table generation complete.\a\a\a\a\n");
+    printf("Word table generation complete.\a\n");
     
     char checkTypeFormat[] = "SELECT *, COUNT(*) FROM 'WORDS' WHERE (type = %d)";
     int typeConsts[] = {(int)'v', (int)'A', (int)'N', (int)'V', (int)'t', (int)'i'};
-    for (int i = 0; i<6; i++){
+    for (int i = 0; i<4; i++){
         sprintf(commandBuffer, checkTypeFormat, typeConsts[i]);
         struct LinkedList* response = databaseSelect(commandBuffer, db, 1);
         //printf("Ran query %s\n", commandBuffer);

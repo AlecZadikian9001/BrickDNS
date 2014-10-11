@@ -59,12 +59,18 @@ size_t cTalkRecv(int fd, unsigned char* buffer, size_t bufferLen){
     return bytesRead;
 }
 
+/*
 #define alert(str) \
 do{ \
 system("say alert"); \
 system("say \
 str \
 "); \
+} while (0); \ 
+*/
+
+#define alert(str) \
+do{ \
 } while (0); \
 
 int main(){
