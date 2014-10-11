@@ -10,7 +10,7 @@
 #define BrickDNS_Server_h
 
 #include <pthread.h>
-#include <sqlite3.h>
+#include "sqlite3.h"
 #include "general.h"
 
 struct Server{

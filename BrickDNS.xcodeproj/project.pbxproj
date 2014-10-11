@@ -14,7 +14,6 @@
 		E1B2332719C259DB00513578 /* BrickDNS.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B2332619C259DB00513578 /* BrickDNS.1 */; };
 		E1B2333F19C25A8500513578 /* general.c in Sources */ = {isa = PBXBuildFile; fileRef = E1B2333E19C25A8500513578 /* general.c */; };
 		E1B2334219C25ACA00513578 /* database.c in Sources */ = {isa = PBXBuildFile; fileRef = E1B2334119C25ACA00513578 /* database.c */; };
-		E1B2334519C25DEB00513578 /* sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = E1B2334419C25DEB00513578 /* sha256.c */; };
 		E1B2334A19C25E2200513578 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = E1B2334719C25E2200513578 /* sqlite3.c */; };
 		E1B2334D19C25FA700513578 /* server.c in Sources */ = {isa = PBXBuildFile; fileRef = E1B2334C19C25FA700513578 /* server.c */; };
 		E1C7C7E419C282DC00D1C49F /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E1C7C7E319C282DC00D1C49F /* libcurl.dylib */; };
@@ -63,8 +62,6 @@
 		E1B2333E19C25A8500513578 /* general.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = general.c; sourceTree = "<group>"; };
 		E1B2334019C25ACA00513578 /* database.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = database.h; sourceTree = "<group>"; };
 		E1B2334119C25ACA00513578 /* database.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = database.c; sourceTree = "<group>"; };
-		E1B2334319C25DEB00513578 /* sha256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sha256.h; sourceTree = "<group>"; };
-		E1B2334419C25DEB00513578 /* sha256.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sha256.c; sourceTree = "<group>"; };
 		E1B2334719C25E2200513578 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
 		E1B2334819C25E2200513578 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
 		E1B2334919C25E2200513578 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
@@ -163,8 +160,6 @@
 				E10CD8F819E08EE0007ADDE5 /* setup and tests */,
 				E1B2334019C25ACA00513578 /* database.h */,
 				E1B2334119C25ACA00513578 /* database.c */,
-				E1B2334319C25DEB00513578 /* sha256.h */,
-				E1B2334419C25DEB00513578 /* sha256.c */,
 				E1B2333D19C25A8500513578 /* general.h */,
 				E1B2333E19C25A8500513578 /* general.c */,
 				E1B2334B19C25F9B00513578 /* server.h */,
@@ -270,7 +265,6 @@
 				E1B2332519C259DB00513578 /* main.c in Sources */,
 				E1B2334219C25ACA00513578 /* database.c in Sources */,
 				E1DF6CDA19E06BF700E59FA8 /* testClient.c in Sources */,
-				E1B2334519C25DEB00513578 /* sha256.c in Sources */,
 				E1B2334A19C25E2200513578 /* sqlite3.c in Sources */,
 				E10CD8FB19E08FDC007ADDE5 /* wordsDatabase.c in Sources */,
 				E10CD8F219E08CDE007ADDE5 /* ctalk.c in Sources */,
