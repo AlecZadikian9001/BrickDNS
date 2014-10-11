@@ -15,14 +15,9 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <string.h>
+#include <stdbool.h>
 
 // Constants:
-
-
-// Math definitions:
-typedef short bool;
-#define true    1
-#define false   0
 
 #define numDigits(var) (log10(var)+1)
 

@@ -70,7 +70,7 @@ int main(int argc, const char * argv[]){
     if (logLevel>=LOG_ABNORMAL) printf("logLevel: %d\nthreadLimit: %d\ntimeout: %f\nkeepAlive: %d\n",logLevel,server.threadLimit, server.timeout, server.keepAlive);
     
     startServer(&server);
-    //interactiveTest();
+    interactiveTest();
     
     pause();
 }

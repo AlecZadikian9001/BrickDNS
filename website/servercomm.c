@@ -59,60 +59,86 @@ size_t cTalkRecv(int fd, unsigned char* buffer, size_t bufferLen){
     return bytesRead;
 }
 
+#define alert(str) \
+do{ \
+system("say alert"); \
+system("say \
+str \
+"); \
+} while (0); \
+
 int main(){
-//system("say CGI script being loaded...");
-char *data = NULL;
-int sockfd = 0;
-printf("%s%c%c\n",
-"Content-Type:text/html;charset=iso-8859-1",13,10);
-printf("<TITLE>1337 Server Connection</TITLE>\n");
-data = getenv("QUERY_STRING");
-char* message = data;
-if(data == NULL){
-	system("say check");
-  printf("<P>Error! Error in passing data from form to script.");
-  system("say Error in passing data from form to script.");
-  }
-if(0){
-  printf("<P>Error! Invalid data.");
-  system("say Error! Invalid data.");
-  }
-else{
+    //system("say CGI script being loaded...");
+    int sockfd = 0;
+    printf("%s%c%c\n",
+           "Content-Type:text/html;charset=iso-8859-1",13,10);
+    printf("<TITLE>BrickDNS API</TITLE>\n");
+    char* data = getenv("QUERY_STRING");
+    if(data == NULL){
+        //system("say check");
+        printf("Error in passing data from form to script.\n");
+        alert("Error");
+        //system("say Error in passing data from form to script.");
+    }
     struct sockaddr_in serv_addr;
-	if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0){
-		printf("\n Error : Could not create socket \n");
-		system("say Error: could not create socket.");
-		return 1;
-	}
-	memset(&serv_addr, '0', sizeof(serv_addr));
-	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_port = htons(9001);
-	if(inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr)<=0){
-		printf("\n inet_pton error occured\n");
-		return 1;
-	}
-	if(connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
-		printf("\n Error : Connect Failed \n");
-		return 1;
-	}
-	char inBuf[512];
-  cTalkSend(sockfd, message, strlen(message)+1);
-  cTalkRecv(sockfd, inBuf, 512);
-  printf("%s\n\n", inBuf);
-  int isCoords = 0;
-  for (int i = 0; i<strlen(inBuf); i++){
-  if (inBuf[i]>'0' && inBuf[i]<'9'){ isCoords = 1; break;}
-  }
-  if (isCoords!=0){
-  char url[512];
-  char* token; char *state;
-  token = strtok_r(inBuf, ",", &state);
-  float latitude = atof(token)/100000;
-  token = strtok_r(NULL, ",", &state);
-                            float longitude = atof(token)/100000;
-  sprintf(url, "<a href=\"https://www.google.com/maps/@%f,%f,20z\">Google Maps</a>", latitude, longitude);
-  printf("%s", url);
-  }
-  }
-return 0;
+    if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0){
+        printf("\n Error : Could not create socket \n");
+        alert("Error");
+        //system("say Error: could not create socket.");
+        return 1;
+    }
+    memset(&serv_addr, '0', sizeof(serv_addr));
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(9001);
+    if(inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr)<=0){
+        printf("\n inet_pton error occured\n");
+        alert("Error");
+        return 1;
+    }
+    if(connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
+        printf("\n Error : Connect Failed \n");
+        alert("Error");
+        return 1;
+    }
+    char inBuf[512];
+    switch (data[0]){
+        case '1':{
+            cTalkSend(sockfd, data, strlen(data)+1);
+            cTalkRecv(sockfd, inBuf, 512);
+            char url[512];
+            char* token = NULL; char *state;
+            token = strtok_r(inBuf, ",", &state);
+            if (!token){ printf("error"); return 1; }
+            float latitude = atof(token)/100000;
+            token = strtok_r(NULL, ",", &state);
+            if (!token){ printf("error"); return 1; }
+            float longitude = atof(token)/100000;
+            sprintf(url, "<a href=\"https://www.google.com/maps/@%f,%f,20z\">Google Maps</a>", latitude, longitude);
+            printf("%f, %f<br><br>%s", latitude, longitude, url);
+            //printf("%s", url);
+            break;
+        }
+        case '2':{
+            char* token; char *state;
+            token = strtok_r(data+sizeof(char), ",", &state);
+            if (!token){ printf("error"); return 1; }
+            float latitude = atof(token);
+            token = strtok_r(NULL, ",", &state);
+            if (!token){ printf("error"); return 1; }
+            float longitude = atof(token);
+            char alteredMessage[strlen(data)+10];
+            sprintf(alteredMessage, "2%d,%d", (int)(latitude*100000), (int)(longitude*100000));
+            //printf("%s", alteredMessage);
+            cTalkSend(sockfd, alteredMessage, strlen(alteredMessage)+1);
+            cTalkRecv(sockfd, inBuf, 512);
+            printf("%s\n\n", inBuf);
+            break;
+        }
+        default:{
+            printf("Invalid input.\n");
+            alert("Error");
+            return 1;
+        }
+    }
+    return 0;
 }

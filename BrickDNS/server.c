@@ -52,6 +52,7 @@ int num_A = 0, num_N = 0, num_v = 0, num_V = 0; // number of each word type
 // Latitude goes from -9000000 to 9000000 (inclusive)
 // Longitude goes from -18000000 to 17999999 (inclusive)
 // Output has to be uint64_t (unsigned 64-bit integer) to have a big enough co-domain. Do NOT convert the uint64_t to anything else.
+#define MIN_OUTPUT_NUMBERFROMCOORDINATES 0
 #define MAX_OUTPUT_NUMBERFROMCOORDINATES (numberFromCoordinates(MAX_LATITUDE, MAX_LONGITUDE))
 uint64_t numberFromCoordinates(int latitude, int longitude){
     uint64_t number;
@@ -62,9 +63,11 @@ uint64_t numberFromCoordinates(int latitude, int longitude){
 }
 
 //Undoes the above function, converting num to latitude and longitude. Leaves latitude and longitude pointing to the results.
-void coordinatesFromNumber(uint64_t number, int* latitude, int* longitude){
+int coordinatesFromNumber(uint64_t number, int* latitude, int* longitude){
+    if (number > MAX_OUTPUT_NUMBERFROMCOORDINATES || number < MIN_OUTPUT_NUMBERFROMCOORDINATES) return RET_INPUT_ERROR;
     *latitude = (int) (number / NUMBER_POSSIBLE_LONGITUDE) - abs(MIN_LATITIUDE);
     *longitude = (int) (number % NUMBER_POSSIBLE_LONGITUDE) - abs(MIN_LONGITUDE);
+    return RET_NO_ERROR;
 }
 
 struct LinkedList* wordsFromNumber(uint64_t num, sqlite3* db){
@@ -74,7 +77,6 @@ struct LinkedList* wordsFromNumber(uint64_t num, sqlite3* db){
     char commandBuffer[512]; //lolololol wasteful
     for (int i = 0; i<4; i++){
         uint64_t base = 0;
-        uint64_t divisor = 0;
         int type = 0;
         switch (i){
             case 0:{
@@ -112,6 +114,7 @@ struct LinkedList* wordsFromNumber(uint64_t num, sqlite3* db){
         new->size = strlen(word)+1;
         new->value = word;
         new->next = emalloc(sizeof(struct LinkedList));
+        bzero(new->next, sizeof(struct LinkedList));
         new = new->next;
     }
     
@@ -122,13 +125,17 @@ uint64_t numberFromWords(struct LinkedList* words, sqlite3* db){
     uint64_t ret = 0;
     char* word;
     int i = 0;
+    if (!words || !words->value) return -1;
     while (words && words->value){
         word = words->value;
         
         char commandBuffer[512]; //lolololol wasteful
         sprintf(commandBuffer, "SELECT * FROM 'WORDS' WHERE (WORD = '%s')", word); // Word here is the word you're looking for.
         struct LinkedList* results = databaseSelect(commandBuffer, db, 1);
-        if (!results || !results->value) return 0;
+        if (!results || !results->value){
+            freeRows(results);
+            return -1;
+        }
         uint64_t index = intColumn(results->value, 2); // Index here is the type index of the inputted word.
         
         switch(i){
@@ -183,7 +190,7 @@ void* workerThreadFunction(void* argVoid){
     tv.tv_usec = fmod(arg->server->timeout, 1.0)*1000000.0;  // timeout microseconds
     size_t recvBufLen = arg->server->recvSize;
     uint8_t* receiveBuffer = emalloc(sizeof(uint8_t)*recvBufLen);
-    size_t receiveSize = 0;
+    long receiveSize = 0;
     char coordinatesReplyFormat[] = "%d,%d";
     char wordsReplyFormat[] = "%s,%s,%s,%s";
     char replyBuffer[MAX_REPLY_LENGTH];
@@ -208,13 +215,26 @@ void* workerThreadFunction(void* argVoid){
             //^^^^
             do{
                 receiveSize = cTalkRecv(clntSock, receiveBuffer, recvBufLen);
+                char check;
+                bool isSanitary = true;
+                for (long i = 0; i<receiveSize-1; i++){
+                    check = receiveBuffer[i];
+                    if (!((check <= 'z' && check >= 'a') || (check >= '0' && check <= '9') || check == '-' || check == '.' || check == ',' || check == '\0')){
+                        isSanitary = false;
+                        break;
+                    }
+                }
+                if (!isSanitary){
+                    if (logLevel >= LOG_ABNORMAL) printf("Client %s sent unsanitary input.\n", ipAddr);
+                    break;
+                }
                 if (!arg->server->keepAlive) shutdown(clntSock, 0); // stop receiving data
                 if (receiveSize < 1 || receiveSize > recvBufLen){
+                    if (logLevel >= LOG_ABNORMAL) printf("Client %s sent invalid input.\n", ipAddr);
                     break;
                 }
                 //*** Additional data from client handling code goes here ***//
                 //vvvv//
-                if (logLevel >= LOG_FULL) printf("Received message: %s\nof length %lu\n", receiveBuffer, receiveSize);
                 ClientCommand cmd = ((int) receiveBuffer[0] - '0')+NET_NULL_START;
                 if (cmd >= NET_NULL_END || cmd <= NET_NULL_START){
                     if (logLevel >= LOG_ABNORMAL) printf("Invalid command %d from %s; disconnecting.\n", cmd, ipAddr);
@@ -222,6 +242,7 @@ void* workerThreadFunction(void* argVoid){
                 }
                 memcpy(receiveBuffer, receiveBuffer+1*sizeof(uint8_t), recvBufLen);
                 receiveBuffer[recvBufLen-1] = '\0';
+                bool fail = false;
                 switch (cmd){
                     case NET_GET_NAME:{
                         char *token;
@@ -234,7 +255,9 @@ void* workerThreadFunction(void* argVoid){
                             i++;
                         }
                         uint64_t num = numberFromCoordinates(latitude, longitude);
+                        if (num==-1){ fail = true; break; }
                         struct LinkedList* words = wordsFromNumber(num, db);
+                        if (!words || !words->value || !words->next || !words->next->value || !words->next->next || !words->next->next->value || !words->next->next->next || !words->next->next->next->value){ fail = true; break; }
                         sprintf(replyBuffer, wordsReplyFormat, words->value, words->next->value, words->next->next->value, words->next->next->next->value);
                         cTalkSend(clntSock, replyBuffer, strlen(replyBuffer)+1);
                         freeLinkedList(words, &free);
@@ -253,12 +276,18 @@ void* workerThreadFunction(void* argVoid){
                             node = node->next;
                         }
                         uint64_t num = numberFromWords(head, db);
+                        if (num==-1){ fail = true; break; }
                         int latitude, longitude;
-                        coordinatesFromNumber(num, &latitude, &longitude);
+                        int coordsRet = coordinatesFromNumber(num, &latitude, &longitude);
+                        if (coordsRet != RET_NO_ERROR){ fail = true; break; }
                         sprintf(replyBuffer, coordinatesReplyFormat, latitude, longitude);
                         cTalkSend(clntSock, replyBuffer, strlen(replyBuffer)+1);
                         break;
                     }
+                }
+                if (fail){
+                    if (logLevel >= LOG_INFORMATIONAL) printf("Client %s sent a bad request.\n", ipAddr);
+                    break;
                 }
                 //^^^^
             } while (arg->server->keepAlive);
@@ -331,6 +360,7 @@ int startServer(struct Server* mainArg){
     sqlite3* db = NULL;
     databaseConnect(&db, DB_URL);
     loadWordList(db, &longestWord, &num_N, &num_V, &num_v, &num_A);
+    sqlite3_close(db);
     
     return changeThreadLimit(mainArg->threadLimit, mainArg);
 }

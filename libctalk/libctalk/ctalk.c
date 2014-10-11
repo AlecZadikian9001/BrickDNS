@@ -13,6 +13,7 @@
 #include <stdbool.h>
 #include <math.h>
 #include <unistd.h>
+#include "general.h"
 #include "ctalk.h"
 
 size_t cTalkSend(int fd, unsigned char* message, size_t messageLen){
@@ -32,6 +33,7 @@ size_t cTalkSend(int fd, unsigned char* message, size_t messageLen){
     size_t send;
     send = writev(fd, iov, 2);
     if (send==-1) return 0;
+    if (logLevel >= LOG_FULL && messageLen>0) printf("Sent message: %s\nof length %lu\n", message, messageLen);
     return messageLen;
 }
 
@@ -70,6 +72,7 @@ size_t cTalkRecv(int fd, unsigned char* buffer, size_t bufferLen){
         if (recvLength<=0) return 0;
         bytesRead+=recvLength;
     }
+    if (logLevel >= LOG_FULL && bufferLen>0) printf("Received message: %s\nof length %lu\n", buffer, bufferLen);
     return bytesRead;
 }
 

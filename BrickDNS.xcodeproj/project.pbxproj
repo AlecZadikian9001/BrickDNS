@@ -54,6 +54,8 @@
 		E10CD8F119E08CDE007ADDE5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		E10CD8F919E08FDC007ADDE5 /* wordsDatabase.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wordsDatabase.c; sourceTree = "<group>"; };
 		E10CD8FA19E08FDC007ADDE5 /* wordsDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wordsDatabase.h; sourceTree = "<group>"; };
+		E128A32419E8E3FB00EEE861 /* servercomm.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = servercomm.c; sourceTree = "<group>"; };
+		E128A32519E8E3FB00EEE861 /* servercomm.cgi */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = servercomm.cgi; sourceTree = "<group>"; };
 		E1B2332119C259DB00513578 /* BrickDNS */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = BrickDNS; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B2332419C259DB00513578 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		E1B2332619C259DB00513578 /* BrickDNS.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = BrickDNS.1; sourceTree = "<group>"; };
@@ -128,9 +130,19 @@
 			name = "setup and tests";
 			sourceTree = "<group>";
 		};
+		E128A32319E8E3FB00EEE861 /* website */ = {
+			isa = PBXGroup;
+			children = (
+				E128A32419E8E3FB00EEE861 /* servercomm.c */,
+				E128A32519E8E3FB00EEE861 /* servercomm.cgi */,
+			);
+			path = website;
+			sourceTree = "<group>";
+		};
 		E1B2331819C259DB00513578 = {
 			isa = PBXGroup;
 			children = (
+				E128A32319E8E3FB00EEE861 /* website */,
 				E1B2332D19C25A1200513578 /* lib */,
 				E1B2332319C259DB00513578 /* BrickDNS */,
 				E1B2332219C259DB00513578 /* Products */,
