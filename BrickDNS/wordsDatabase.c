@@ -31,7 +31,7 @@ int loadWordList(sqlite3* db, int* longestWord, int* num_N, int* num_V, int* num
     int types[4] = {0,0,0,0};
     while (fscanf(ifp, "%s\r", wordBuffer) != EOF) {
         length = strlen(wordBuffer);
-        for (int i = 0; i<strlen(wordBuffer); i++){
+        for (int i = 0; i<length; i++){
             if (wordBuffer[i]==' ' || (wordBuffer[i]>='A' && wordBuffer[i]<='Z') || wordBuffer[i]=='\'' || i>8) break;
             if (wordBuffer[i]=='|'){
                 wordBuffer[i] = '\0';
@@ -60,14 +60,12 @@ int loadWordList(sqlite3* db, int* longestWord, int* num_N, int* num_V, int* num
             }
         }
         bigIndex++;
-        if (bigIndex%1000==0){
+        if (bigIndex%4000==0){
             printf("Scanned %d words thus far...\n", bigIndex);
         }
     }
-    printf("Word table generation complete.\n");
-    system("say Word table generation complete.");
+    printf("Word table generation complete.\a\a\a\a\n");
     
-    //char talkBuf[1024];
     char checkTypeFormat[] = "SELECT *, COUNT(*) FROM 'WORDS' WHERE (type = %d)";
     int typeConsts[] = {(int)'v', (int)'A', (int)'N', (int)'V', (int)'t', (int)'i'};
     for (int i = 0; i<6; i++){
@@ -75,24 +73,15 @@ int loadWordList(sqlite3* db, int* longestWord, int* num_N, int* num_V, int* num
         struct LinkedList* response = databaseSelect(commandBuffer, db, 1);
         //printf("Ran query %s\n", commandBuffer);
         int count = intColumn(response->value, 3);
-        printf("There are %d %c words.\n", count, (char) typeConsts[i]);
+        printf("There are %d %c (#%d) words.\n", count, (char) typeConsts[i], (int) typeConsts[i]);
         //sprintf(talkBuf, "say There are %d \"%c\" words.", count, (char) typeConsts[i]);
         //system(talkBuf);
         freeRows(response);
     }
-    char checkVerbs[] = "SELECT *, COUNT(*) FROM 'WORDS' WHERE (type IN (116, 86, 105))";
-    
-    struct LinkedList* response = databaseSelect(checkVerbs, db, 1);
-    //printf("Ran query %s\n", commandBuffer);
-    int count = intColumn(response->value, 3);
-    printf("There are %d total verbs.\n", count);
-    *num_V = count;
     *num_N = types[0];
-    *num_A = types[4];
-    *num_v = types[5];
-    //sprintf(talkBuf, "say There are %d total verbs.", count);
-    //system(talkBuf);
-    freeRows(response);
+    *num_V = types[1];
+    *num_A = types[2];
+    *num_v = types[3];
     fclose(ifp);
     
     //system("say There are over 9000 words! You are so 1337.");

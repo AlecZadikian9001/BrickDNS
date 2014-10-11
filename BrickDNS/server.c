@@ -103,7 +103,7 @@ struct LinkedList* wordsFromNumber(uint64_t num, sqlite3* db){
         struct LinkedList* results = databaseSelect(commandBuffer, db, 1);
         if (!results || !results->value){
             freeRows(results);
-           // freeLinkedList(ret, free); TODO memory leak
+            freeLinkedList(ret, &free);
             return NULL;
         }
         char* word = strdup(stringColumn(results->value, 0)); // Word here is the word with that type index
@@ -160,7 +160,7 @@ uint64_t numberFromWords(struct LinkedList* words, sqlite3* db){
 struct ServerWorkerThread{
     struct Server* server; // the server options
     unsigned int threadID; // the thread ID for this worker thread
-    unsigned int numWords; // number of words in master dictionary // TODO may want to add separate dictionaries for nouns, verbs, adjectives, articles, etc.
+    unsigned int numWords; // number of words in master dictionary
     char* dictionary; // master dictionary, a 2D array of chars (numWords x LONGEST_WORD)
 };
 
@@ -237,6 +237,7 @@ void* workerThreadFunction(void* argVoid){
                         struct LinkedList* words = wordsFromNumber(num, db);
                         sprintf(replyBuffer, wordsReplyFormat, words->value, words->next->value, words->next->next->value, words->next->next->next->value);
                         cTalkSend(clntSock, replyBuffer, strlen(replyBuffer)+1);
+                        freeLinkedList(words, &free);
                         break;
                     }
                     case NET_RESOLVE_NAME:{
