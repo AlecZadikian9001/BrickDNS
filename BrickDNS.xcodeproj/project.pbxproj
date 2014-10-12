@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		E10CD8F219E08CDE007ADDE5 /* ctalk.c in Sources */ = {isa = PBXBuildFile; fileRef = E10CD8EA19E08CDE007ADDE5 /* ctalk.c */; };
-		E10CD8F419E08CDE007ADDE5 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = E10CD8F119E08CDE007ADDE5 /* README.md */; };
 		E10CD8FB19E08FDC007ADDE5 /* wordsDatabase.c in Sources */ = {isa = PBXBuildFile; fileRef = E10CD8F919E08FDC007ADDE5 /* wordsDatabase.c */; };
 		E1B2332519C259DB00513578 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = E1B2332419C259DB00513578 /* main.c */; };
 		E1B2332719C259DB00513578 /* BrickDNS.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = E1B2332619C259DB00513578 /* BrickDNS.1 */; };
@@ -261,7 +260,6 @@
 			files = (
 				E1B2334D19C25FA700513578 /* server.c in Sources */,
 				E1B2333F19C25A8500513578 /* general.c in Sources */,
-				E10CD8F419E08CDE007ADDE5 /* README.md in Sources */,
 				E1B2332519C259DB00513578 /* main.c in Sources */,
 				E1B2334219C25ACA00513578 /* database.c in Sources */,
 				E1DF6CDA19E06BF700E59FA8 /* testClient.c in Sources */,

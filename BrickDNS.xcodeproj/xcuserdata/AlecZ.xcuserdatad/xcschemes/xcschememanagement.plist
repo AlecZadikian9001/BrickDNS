@@ -9,9 +9,24 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>Makefile.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>E119911319E99565001E1EDE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E119911719E996A9001E1EDE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E1B2332019C259DB00513578</key>
 		<dict>
 			<key>primary</key>
