@@ -20,7 +20,9 @@ If you want to get coordinates from words: "1word,word,word,word" example: "1mir
 If you want to get words from coordinates: "2latitude,longitude" (latitude and longitude given in decimal form) example: "234.1314392,-118.4433847" (for coordinates 34.1314392,-118.4433847)
 
 A server is already up for this and has a CGI script: http://deepskate.com/BrickDNS/tester.cgi
+
 Example words from coordinates for Soda Hall at Cal: http://deepskate.com/BrickDNS/tester.cgi?237.8756034,-122.2587475
+
 Example coordinates from words for Soda Hall at Cal: http://deepskate.com/BrickDNS/tester.cgi?1haughty,dairy,fatly,militate
 
 }
