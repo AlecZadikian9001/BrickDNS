@@ -23,7 +23,7 @@ A server is already up for this and has a CGI script: http://deepskate.com/Brick
 
 Example words from coordinates for Soda Hall at Cal: http://deepskate.com/BrickDNS/tester.cgi?237.8756034,-122.2587475
 
-Example coordinates from words for Soda Hall at Cal: http://deepskate.com/BrickDNS/tester.cgi?1haughty,dairy,fatly,militate
+Example coordinates from words for Soda Hall at Cal: http://deepskate.com/BrickDNS/tester.cgi?1celebrated,bouquet,aport,devoting
 
 }
 
