@@ -16,11 +16,11 @@
 		<string>https://github.com/AlecZadikian9001/BrickDNS.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>BrickDNS.xcodeproj/project.xcworkspace</string>
+	<string>BrickDNS.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>A782EA0342C4074B1CF4CB03EFB74F3928BEA9D6</key>
-		<string>../../../libctalk</string>
+		<string>../..libctalk/</string>
 		<key>C41DFBE2348D04B96CD4E273D328A8970E1D6F90</key>
 		<string>../..</string>
 	</dict>
