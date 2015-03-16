@@ -30,7 +30,7 @@ Example coordinates from words for Soda Hall at Cal: http://deepskate.com/BrickD
 
 Known Bugs/Flaws{
 
-- The dictionary used for this has a lot of obscure words. A dictionary only consisting of common words would still easily have enough words for this project, but we were unable to find one that also had grammatical categorization.
+- The dictionary used for this has a lot of obscure words. A dictionary only consisting of common words would still easily have enough words for this project, but we were unable to find one that also had grammatical categorization. If we could only get a better dictionary or weed out all the obscure words from this one, the project would look much better.
 
 - There is very little error checking. This is a hack. A client cannot crash the server, but a false start of the server can lead to a crash. Make sure the sql.db file and the dictionary.txt file are in the working directory. Editing the dictionary.txt file in certain ways may result in a corrupted database, unpredictable behavior, or crashes.
 
