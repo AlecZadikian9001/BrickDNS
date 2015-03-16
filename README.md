@@ -5,7 +5,7 @@ Purpose of Project{
 
 The purpose of this project is to make exact geo coordinates more memorable and easily transferrable between humans by giving each set of coordinates, down to 1/100000th of a degree for latitude and longitude, a unique and grammatically correct 4-word sentence (which we call a "BrickDNS sentence" in this document) to identify it. This is not only easier than dealing with number/address/city combinations but totally non-ambiguous and usable anywhere in the world. Street addresses sometimes have ambiguity or can be misinterpreted, unlike BrickDNS sentences. Different locations with in a building will have different BrickDNS sentences associated with them.
 
-This is a proof of concept / prototype, but many existing services could implement it. For example, Apple's Siri could take BrickDNS sentences instead of street addresses when the user wants to navigate somewhere. On the non-tech side, people could very easily memorize exact locations and give each other their exact coordinates by verbal communication of BrickDNS sentences.
+This is a proof of concept / prototype, but many existing services could implement it. For example, Apple's Siri could take BrickDNS sentences instead of street addresses when the user wants to navigate somewhere. On the non-tech side, people could very easily memorize exact locations and give each other their exact coordinates by verbal communication of BrickDNS sentences. I also mentioned possible usage in the military to one of the Cal Hacks staff who asked about our project.
 
 }
 
