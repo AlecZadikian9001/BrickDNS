@@ -31,7 +31,7 @@ Known Bugs/Flaws{
 
 - The dictionary used for this has a lot of obscure words. A dictionary only consisting of common words would still easily have enough words for this project, but we were unable to find one that also had grammatical categorization.
 
-- There is very little error checking. This is a hack. A client cannot crash the server, but a false start of the server can lead to a crash. Make sure the sql.db file and the dictionary.txt file are in the working directory, and editing the dictionary.txt file in certain ways may result in a corrupted database, bugs, or crashes.
+- There is very little error checking. This is a hack. A client cannot crash the server, but a false start of the server can lead to a crash. Make sure the sql.db file and the dictionary.txt file are in the working directory. Editing the dictionary.txt file in certain ways may result in a corrupted database, unpredictable behavior, or crashes.
 
 - The server regenerates the words database every time it starts, and this is not a very optimized process.
 
