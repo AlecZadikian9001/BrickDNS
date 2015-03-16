@@ -13,7 +13,7 @@ Details and Usage{
 
 The server generates the words database, sql.db (must be in the working directory), based on the dictionary.txt file (must be in the working directory).
 
-The server takes geo coordinates as (latitude, longitude) in degrees in decimal form, truncates them to 5 decimal places (precision of 1/100000th of a degree), and returns four English words that can be used to form a grammatically correct sentence. The server can also take these words and return back the original geo coordinates. In math terms, function from coordinates to words is one-to-one. 
+The server takes geo coordinates as (latitude, longitude) in degrees in decimal form, truncates them to 5 decimal places (precision of 1/100000th of a degree), and returns four English words that can be used to form a grammatically correct sentence. The server can also take these words and return back the original geo coordinates. In math terms, function from coordinates to words is one-to-one and onto. 
 
 The web CGI script takes coordinates or words in the URL as parameters and communicates with the server (localhost) then returns the output to the client. URLs used to access the CGI script have the format "http://path/to/cgi/script.cgi?query", where "query" is replaced with:
 If you want to get coordinates from words: "1word,word,word,word" example: "1miriest,faraday,hopingly,lurch"
